@@ -1,100 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📋 To-Do List</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:#121212;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px}
-.container{max-width:500px;width:100%;background:#1e1e1e;padding:24px 20px;border-radius:24px;color:#e0e0e0;box-shadow:0 12px 40px rgba(0,0,0,0.8)}
-h1{text-align:center;color:#bb86fc;margin-bottom:20px;font-size:28px}
-.input-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-#taskInput{flex:1;padding:12px;border-radius:14px;border:1px solid #333;background:#2a2a2a;color:#fff;font-size:16px;min-width:150px;outline:none}
-#taskInput:focus{border-color:#bb86fc}
-#categorySelect{padding:12px;border-radius:14px;border:1px solid #333;background:#2a2a2a;color:#fff;font-size:16px;outline:none}
-#addBtn{width:100%;padding:12px;border-radius:14px;border:none;background:#bb86fc;color:#000;font-weight:bold;font-size:16px;cursor:pointer;transition:0.2s}
-#addBtn:active{transform:scale(0.96)}
-.filter-section{display:flex;gap:8px;margin:15px 0;flex-wrap:wrap;justify-content:center}
-.filter-btn{padding:8px 16px;border-radius:30px;border:1px solid #333;background:#2a2a2a;color:#ccc;cursor:pointer;font-size:14px;transition:0.2s}
-.filter-btn.active{background:#bb86fc;color:#000;border-color:#bb86fc}
-.counter{text-align:center;font-size:14px;color:#aaa;margin-bottom:15px}
-#taskList{list-style:none;padding:0}
-#taskList li{display:flex;align-items:center;gap:10px;padding:12px;background:#2a2a2a;border-radius:14px;margin-bottom:8px;flex-wrap:wrap}
-#taskList li.completed span{text-decoration:line-through;color:#777}
-#taskList li .tag{font-size:11px;background:#3a3a3a;padding:2px 12px;border-radius:30px;color:#bb86fc}
-#taskList li .del{margin-left:auto;background:#cf6679;color:#000;border:none;border-radius:30px;padding:4px 14px;font-weight:bold;cursor:pointer}
-#taskList li input[type=checkbox]{width:20px;height:20px;accent-color:#bb86fc;cursor:pointer}
-@media(max-width:480px){.container{padding:16px}h1{font-size:24px}.input-row{flex-direction:column}#taskInput{min-width:auto}.filter-btn{flex:1;max-width:none}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 To-Do List</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+        body{background:#121212;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px}
+        .container{max-width:500px;width:100%;background:#1e1e1e;padding:24px 20px;border-radius:24px;color:#e0e0e0;box-shadow:0 12px 40px rgba(0,0,0,0.8)}
+        h1{text-align:center;color:#bb86fc;margin-bottom:20px;font-size:28px}
+        .input-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+        #taskInput{flex:1;padding:12px;border-radius:14px;border:1px solid #333;background:#2a2a2a;color:#fff;font-size:16px;min-width:150px;outline:none}
+        #taskInput:focus{border-color:#bb86fc}
+        #categorySelect{padding:12px;border-radius:14px;border:1px solid #333;background:#2a2a2a;color:#fff;font-size:16px;outline:none}
+        #addBtn{width:100%;padding:12px;border-radius:14px;border:none;background:#bb86fc;color:#000;font-weight:bold;font-size:16px;cursor:pointer;transition:0.2s}
+        #addBtn:active{transform:scale(0.96)}
+        .filter-section{display:flex;gap:8px;margin:15px 0;flex-wrap:wrap;justify-content:center}
+        .filter-btn{padding:8px 16px;border-radius:30px;border:1px solid #333;background:#2a2a2a;color:#ccc;cursor:pointer;font-size:14px;transition:0.2s}
+        .filter-btn.active{background:#bb86fc;color:#000;border-color:#bb86fc}
+        .counter{text-align:center;font-size:14px;color:#aaa;margin-bottom:15px}
+        #taskList{list-style:none;padding:0}
+        #taskList li{display:flex;align-items:center;gap:10px;padding:12px;background:#2a2a2a;border-radius:14px;margin-bottom:8px;flex-wrap:wrap}
+        #taskList li.completed span{text-decoration:line-through;color:#777}
+        #taskList li .tag{font-size:11px;background:#3a3a3a;padding:2px 12px;border-radius:30px;color:#bb86fc}
+        #taskList li .del{margin-left:auto;background:#cf6679;color:#000;border:none;border-radius:30px;padding:4px 14px;font-weight:bold;cursor:pointer}
+        #taskList li input[type=checkbox]{width:20px;height:20px;accent-color:#bb86fc;cursor:pointer}
+        @media(max-width:480px){.container{padding:16px}h1{font-size:24px}.input-row{flex-direction:column}#taskInput{min-width:auto}.filter-btn{flex:1;max-width:none}}
+    </style>
 </head>
 <body>
-<div class="container">
-<h1>📋 Мої завдання</h1>
-<div class="input-row">
-<input type="text" id="taskInput" placeholder="Що зробити?">
-<select id="categorySelect">
-<option value="Робота">💼 Робота</option>
-<option value="Дім">🏠 Дім</option>
-<option value="Навчання">📚 Навчання</option>
-</select>
-</div>
-<button id="addBtn">➕ Додати</button>
-<div class="filter-section">
-<button class="filter-btn active" data-filter="all">Всі</button>
-<button class="filter-btn" data-filter="Робота">💼</button>
-<button class="filter-btn" data-filter="Дім">🏠</button>
-<button class="filter-btn" data-filter="Навчання">📚</button>
-</div>
-<div class="counter">Активних: <span id="activeCount">0</span></div>
-<ul id="taskList"></ul>
-</div>
-<script>
-const taskInput=document.getElementById('taskInput');
-const categorySelect=document.getElementById('categorySelect');
-const addBtn=document.getElementById('addBtn');
-const taskList=document.getElementById('taskList');
-const activeCount=document.getElementById('activeCount');
-const filterBtns=document.querySelectorAll('.filter-btn');
-let tasks=JSON.parse(localStorage.getItem('tasks'))||[];
-let currentFilter='all';
-function save(){localStorage.setItem('tasks',JSON.stringify(tasks));}
-function render(){
-const filtered=tasks.filter(t=>currentFilter==='all'||t.category===currentFilter);
-taskList.innerHTML='';
-filtered.forEach(t=>{
-const li=document.createElement('li');
-li.className=t.completed?'completed':'';
-li.innerHTML='<input type="checkbox" '+(t.completed?'checked':'')+' data-id="'+t.id+'"><span>'+t.text+'</span><span class="tag">'+t.category+'</span><button class="del" data-id="'+t.id+'">✕</button>';
-taskList.appendChild(li);
-});
-activeCount.textContent=tasks.filter(t=>!t.completed).length;
-filterBtns.forEach(b=>b.classList.toggle('active',b.dataset.filter===currentFilter));
-save();
-}
-function add(){
-const text=taskInput.value.trim();
-if(!text){alert('Введіть завдання!');return;}
-tasks.push({id:Date.now(),text:text,category:categorySelect.value,completed:false});
-taskInput.value='';
-render();
-}
-function del(id){tasks=tasks.filter(t=>t.id!==id);render();}
-function toggle(id){
-const t=tasks.find(t=>t.id===id);
-if(t){t.completed=!t.completed;render();}
-}
-addBtn.onclick=add;
-taskInput.onkeypress=function(e){if(e.key==='Enter')add();};
-taskList.onclick=function(e){
-const id=Number(e.target.dataset.id);
-if(e.target.classList.contains('del')){del(id);}
-else if(e.target.type==='checkbox'){toggle(id);}
-};
-filterBtns.forEach(function(b){
-b.onclick=function(){currentFilter=b.dataset.filter;render();};
-});
-render();
-</script>
+    <div class="container">
+        <h1>📋 Мої завдання</h1>
+        <div class="input-row">
+            <input type="text" id="taskInput" placeholder="Що зробити?">
+            <select id="categorySelect">
+                <option value="Робота">💼 Робота</option>
+                <option value="Дім">🏠 Дім</option>
+                <option value="Навчання">📚 Навчання</option>
+            </select>
+        </div>
+        <button id="addBtn">➕ Додати</button>
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">Всі</button>
+            <button class="filter-btn" data-filter="Робота">💼</button>
+            <button class="filter-btn" data-filter="Дім">🏠</button>
+            <button class="filter-btn" data-filter="Навчання">📚</button>
+        </div>
+        <div class="counter">Активних: <span id="activeCount">0</span></div>
+        <ul id="taskList"></ul>
+    </div>
+    <script>
+        const taskInput = document.getElementById('taskInput');
+        const categorySelect = document.getElementById('categorySelect');
+        const addBtn = document.getElementById('addBtn');
+        const taskList = document.getElementById('taskList');
+        const activeCount = document.getElementById('activeCount');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let currentFilter = 'all';
+
+        function save() { localStorage.setItem('tasks', JSON.stringify(tasks)); }
+
+        function render() {
+            const filtered = tasks.filter(t => currentFilter === 'all' || t.category === currentFilter);
+            taskList.innerHTML = '';
+            filtered.forEach(t => {
+                const li = document.createElement('li');
+                li.className = t.completed ? 'completed' : '';
+                li.innerHTML = '<input type="checkbox" ' + (t.completed ? 'checked' : '') + ' data-id="' + t.id + '"><span>' + t.text + '</span><span class="tag">' + t.category + '</span><button class="del" data-id="' + t.id + '">✕</button>';
+                taskList.appendChild(li);
+            });
+            activeCount.textContent = tasks.filter(t => !t.completed).length;
+            filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === currentFilter));
+            save();
+        }
+
+        function add() {
+            const text = taskInput.value.trim();
+            if (!text) { alert('Введіть завдання!'); return; }
+            tasks.push({ id: Date.now(), text: text, category: categorySelect.value, completed: false });
+            taskInput.value = '';
+            render();
+        }
+
+        function del(id) { tasks = tasks.filter(t => t.id !== id); render(); }
+
+        function toggle(id) {
+            const t = tasks.find(t => t.id === id);
+            if (t) { t.completed = !t.completed; render(); }
+        }
+
+        addBtn.onclick = add;
+        taskInput.onkeypress = function(e) { if (e.key === 'Enter') add(); };
+        taskList.onclick = function(e) {
+            const id = Number(e.target.dataset.id);
+            if (e.target.classList.contains('del')) { del(id); } else if (e.target.type === 'checkbox') { toggle(id); }
+        };
+        filterBtns.forEach(function(b) {
+            b.onclick = function() { currentFilter = b.dataset.filter;
+                render(); };
+        });
+        render();
+    </script>
 </body>
 </html>
